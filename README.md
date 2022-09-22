@@ -75,40 +75,40 @@ The lexical scanner is not able to recognize the structure of commands, like 5+;
 This component is based on the following productions set:
 
 Legend
-- S  stands for   < start >
-- E  stands for   < expr >
-- E' stands for   < exprp >
-- T  stands for   < term >
-- T' stands for   < termp >
-- F  stands for   < fact >
+- P   stands for  < prog >
+- S   stands for  < statlist >
+- S'  stands for  < statlistp >
+- S"  stands for  < stat >
+- S"' stands for  < statp >
+- I   stands for  < idlist >
+- I'  stands for  < idlistp >
+- B   stands for  < bexpr >
+- E   stands for  < expr >
+- E'  stands for  < exprlist >
+- E"  stands for  < exprlistp >
 
 Productions
- - S  --->  E EOF
- - E  --->  TE'
- - E' --->  +TE'
- - E' --->  -TE'
- - E' --->  ε
- - T  --->  FT'
- - T' --->  *FT'
- - T' --->  /FT'
- - T' --->  ε
- - F  --->  (E) | NUM
+- P   -->  S EOF
+- S   -->  S" S'
+- S'  -->  ; S" S' | ε
+- S"  -->  assign E to I
+- S"  -->  print ( E' )
+- S"  -->  read ( I )
+- S"  -->  while ( B ) S"
+- S"  -->  if ( B ) S" S"'
+- S"  -->  { S }
+- S"' -->  end | else S" end
+- I   -->  ID I'
+- I'  -->  , ID I' | ε
+- B   -->  RELOP E E
+- E   -->  + ( E' ) | - E E
+- E   -->  * ( E' ) | / E E
+- E   -->  NUM | ID
+- E'  -->  E E"
+- E"  -->  , E E" | ε
  
 #### **Valutator**
-This component is based on the following SDT:
- 
- - S  --->  E EOF {print(E.val)}
- - E  --->  T {E'.i = T.val} E' {E.val = E'.val}
- - E' --->  + T {E'1.i = E'.i + T.val} E'1 {E'.val = E'1.val}
- - E' --->  - T {E'1.i = E'.i - T.val} E'1 {E'.val = E'1.val}
- - E' --->  eps {E'.val = E'1.val}
- - T  --->  F {T'.i = F.val} T' {T.val = T'.val}
- - T' --->  * F {T'1.i = T'.i*F.val} T'1 {T'.val = T'1.val}
- - T' --->  / F {T'1.i = T'.i/F.val} T'1 {T'.val = T'1.val}
- - T' --->  eps {T'.val = T'1.val}
- - F  --->  (E) {F.val = E.val} | NUM {F.val = NUM.value}
-
-NUM is a terminal symbol that has the attribute value, the numeric value of the terminal symbol, passed by the lexical scanner.
+This component is based on the SDT built based on the given grammar.
 
 #### **Translator**
 This component translate programs written in a simple programming language (called P language).
