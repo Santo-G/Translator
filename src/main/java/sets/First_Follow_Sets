@@ -1,0 +1,107 @@
+
+This file includes productions, first, follow and sets based on the given grammar.
+
+ ----------
+ | LEGEND |
+ ----------
+- P   stands for  <prog>
+- S   stands for  <statlist>
+- S'  stands for  <statlistp>
+- S"  stands for  <stat>
+- S"' stands for  <statp>
+- I   stands for  <idlist>
+- I'  stands for  <idlistp>
+- B   stands for  <bexpr>
+- E   stands for  <expr>
+- E'  stands for  <exprlist>
+- E"  stands for  <exprlistp>
+
+ ---------------
+ | PRODUCTIONS |
+ ---------------
+ P   -->  S EOF
+ S   -->  S" S'
+ S'  -->  ; S" S' | ε
+ S"  -->  assign E to I
+ S"  -->  print ( E' )
+ S"  -->  read ( I )
+ S"  -->  while ( B ) S"
+ S"  -->  if ( B ) S" S"'
+ S"  -->  { S }
+ S"' -->  end | else S" end
+ I   -->  ID I'
+ I'  -->  , ID I' | ε
+ B   -->  RELOP E E
+ E   -->  + ( E' ) | - E E
+ E   -->  * ( E' ) | / E E
+ E   -->  NUM | ID
+ E'  -->  E E"
+ E"  -->  , E E" | ε
+
+ ------------
+ | NULLABLE |
+ ------------
+ Nullable
+ NULL (S')
+ NULL (I')
+ NULL (E")
+
+ ---------
+ | FIRST |
+ ---------
+ First(P)   -->  First(S) = First(S") = { assign, print, read, while, if, { }
+ First(S)   -->  First(S") = { assign, print, read, while, if, { }
+ First(S')  -->  First(;) ∪ First(ε) = { ; }
+ First(S")  -->  { assign, print, read, while, if, { }
+ First(S"') -->  First(end) ∪ First(else) = { end, else }
+ First(I)   -->  { ID }
+ First(I')  -->  { , }
+ First(B)   -->  { RELOP }
+ First(E)   -->  { +, -, *, /, NUM, ID }
+ First(E')  -->  First(E) = { +, -, *, /, NUM, ID }
+ First(E")  -->  { , }
+
+ ----------
+ | FOLLOW |
+ ----------
+ Follow(P)   -->  { $ }
+ Follow(S)   -->  First(EOF) ∪ First(}) = { EOF, } }
+ Follow(S')  -->  Follow(S) = { EOF, } }
+ Follow(S")  -->  First(S') ∪ Follow(S) ∪ Follow(S') ∪ First(S"') ∪ First(end) = { ;, EOF, }, end, else }
+ Follow(S"') -->  Follow(S") = { ;, EOF, }, end, else }
+ Follow(I)   -->  Follow(S") ∪ First ()) = { ;, EOF, }, end, else, ) }
+ Follow(I')  -->  Follow(I) = { ;, EOF, }, end, else, ) }
+ Follow(B)   -->  First()) = { ) }
+ Follow(E)   -->  First(to) ∪ First(E) ∪ Follow(B) ∪ First(E") ∪ Follow(E') ∪ Follow(E") = { to, +, -, *, /, NUM, ID, ), , }
+ Follow(E')  -->  First()) = { ) }
+ Follow(E")  -->  Follow(E') = { ) }
+
+ --------
+ | SETS |
+ --------
+ Set( P  -->  S EOF )    --------------------->  First(S) = First(S") = { assign, print, read, while, if, { }
+ Set( S  -->  S"S' )    ---------------------->  First(S") = { assign, print, read, while, if, { }
+ Set( S' -->  ;S"S' )    --------------------->  First(;) = { ; }
+ Set( S' -->  ε )    ------------------------->  First(ε) ∪ Follow(S') = Follow(S) = { EOF, } }
+ Set( S" -->  assign E to I )    ------------->  First(assign) = { assign }
+ Set( S" -->  print ( E' ) )    -------------->  First(print) = { print }
+ Set( S" -->  read ( I ) )    ---------------->  First(read) = { read }
+ Set( S" -->  while ( B ) S" )    ------------>  First(while) = { while }
+ Set( S" -->  if ( B ) S" S"' )    ----------->  First(if) = { if }
+ Set( S" -->  { S } )    --------------------->  First({) = { { }
+ Set( S"' -->  end )    ---------------------->  First(end) = { end }
+ Set( S"' -->  else S" end )    -------------->  First(else) = { else }
+ Set( I  -->  ID I' )    --------------------->  First(ID) = { ID }
+ Set( I' -->  , ID I' )    ------------------->  First(,) = { , }
+ Set( I' -->  ε )    ------------------------->  First(ε) ∪ Follow(I') = { ;, EOF, }, end, else, ) }
+ Set( B  -->  RELOP E E )    ----------------->  First(RELOP) = { RELOP }
+ Set( E  -->  + ( E' ) )    ------------------>  First(+) = { + }
+ Set( E  -->  - E E )    --------------------->  First(-) = { - }
+ Set( E  -->  * ( E' ) )    ------------------>  First(*) = { * }
+ Set( E  -->  / E E )    --------------------->  First(/) = { / }
+ Set( E  -->  NUM )    ----------------------->  First(NUM) = { NUM }
+ Set( E  -->  ID )    ------------------------>  First(ID) = { ID }
+ Set( E' -->  E E" )    ---------------------->  First(E) = { +, -, *, /, NUM, ID }
+ Set( E" -->  , E E" )    -------------------->  First(,) = { , }
+ Set( E" -->  ε )    ------------------------->  First(ε) ∪ Follow(E") = { ) }
+
