@@ -126,8 +126,8 @@ The translation scheme is the following:
 <img src="Translation_scheme.png" alt="Translation scheme" width="1023">
 </p>
 
-The source code is translated by the compiler into the JVM assembler language (.j extension); after that it is translated info the .class file by Jasmin assembler program.
-This project generate an Output.j file and is used the following command to convert it in the Output.class file:
+The source code is translated by the compiler into the JVM assembler language (.j extension); after that it is translated into the .class file by Jasmin assembler program.
+The compiling process generates an Output.j file and the following command is used to convert it in the Output.class file:
 
 <p align="center">
 <strong>java -jar jasmin.jar Output.j</strong>
