@@ -17,7 +17,6 @@ public class Lexer {
         }
     }
 
-
     public Token lexical_scan(BufferedReader br) {
         while (peek == ' ' ||peek == '\t' ||peek == '\n' ||peek == '\r'){
             if (peek == '\n')
@@ -67,7 +66,7 @@ public class Lexer {
                         peek = ' ';
                         return lexical_scan(br);
                     } else {
-                        System.err.println("> Error. Multiple line comment not correctly closed !!!");
+                        System.err.println("> Error. Multiple line comment not correctly closed!");
                         return null;
                     }
                 } else if( peek == '/') {
@@ -96,7 +95,7 @@ public class Lexer {
                     peek = ' ';
                 return Word.and;
             } else{
-                System.err.println("Erroneous character" + " after & : " + peek);
+                System.err.println("> Error. Erroneous character after \"&\" : " + peek);
                 return null;
             }
 
@@ -106,7 +105,7 @@ public class Lexer {
                     peek = ' ';
                     return Word.or;
                 } else{
-                    System.err.println("Erroneous character" + " after | : " + peek);
+                    System.err.println("> Error. Erroneous character after \"|\" : " + peek);
                     return null;
                 }
 
@@ -137,7 +136,7 @@ public class Lexer {
                     peek = ' ';
                     return Word.eq;
                 } else {
-                    System.err.println("Erroneous character" + " after = : " + peek);
+                    System.err.println("> Error. Erroneous character after \"=\" : " + peek);
                     return null;
                 }
 
@@ -148,7 +147,7 @@ public class Lexer {
                 if (Character.isLetter(peek) || Character.isDigit(peek) || peek == '_') {
                     return readIdentifier(br, builderId);
                 } else {
-                    System.err.println("Erroneous character" + " after _ : " + peek);
+                    System.err.println("> Error. Erroneous character after \"_\" : " + peek);
                     return null;
                 }
 
@@ -407,7 +406,7 @@ public class Lexer {
                         builder.append(peek);
                         readch(br);
                         if (peek >= '0' && peek <= '9'){
-                            System.err.println("> Number cannot start with 0");
+                            System.err.println("> Error. Number cannot start with \"0\"");
                             return null;
                         } else {
                             return new NumberTok(builder.toString());
@@ -421,7 +420,7 @@ public class Lexer {
                     }
 
                 } else {
-                    System.err.println("Erroneous character: " + peek);
+                    System.err.println("> Error. Erroneous character: " + peek);
                     return null;
                 }
         }
@@ -429,7 +428,7 @@ public class Lexer {
     }
 
     private Word readIdentifier(BufferedReader br, StringBuilder identifier) {
-        while((peek >= 'a' && peek <= 'z') || (peek >= 'A' && peek <= 'Z') || (peek >= '0' && peek <= '9') || peek == '_') {
+        while(Character.isLetter(peek) || Character.isDigit(peek) || peek == '_') {
             identifier.append(peek);
             readch(br);
         }
@@ -437,7 +436,7 @@ public class Lexer {
     }
 
     private boolean isAMultipleLineComment(BufferedReader br){
-        boolean endOfComment = false;
+        boolean endOfComment;
         while(peek != '*') {
             readch(br);
             if(peek == (char)-1) {
@@ -460,7 +459,7 @@ public class Lexer {
 
     public static void main(String[] args) {
         Lexer lex = new Lexer();
-        String path = "src/test/testFile2.txt";     // path of the test file to use
+        String path = "test/TestFile.txt";     // path of the test file used
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             Token tok;
