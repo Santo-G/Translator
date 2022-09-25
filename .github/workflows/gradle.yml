@@ -37,7 +37,7 @@ jobs:
     #- name: Compile Lexer 
     #  run: javac Lexer.java
     - name: Run Lexer 
-      run: java Lexer.java
+      run: java Lexer
     - name: Compile Parser 
       run: javac src/main/java/Parser.java
     - name: Run Parser 
