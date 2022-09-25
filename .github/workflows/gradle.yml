@@ -35,7 +35,7 @@ jobs:
       with:
         arguments: build
     - name: Compile Lexer 
-      run: javac src/main/java/Lexer.java
+      run: javac Lexer.java
     - name: Run Lexer 
       run: java src/main/java/Lexer
     - name: Compile Parser 
