@@ -33,8 +33,4 @@ jobs:
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build   
-    - name: Run chmod to make jasmin executable
-      run: chmod +x jasmin.jar
-      working-directory: Translator/src/main/java
-    - name: Generate Output.j file
-      run: java -jar src/main/java/jasmin.jar Output.j
+        run: ./gradlew
