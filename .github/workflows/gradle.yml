@@ -35,6 +35,6 @@ jobs:
         arguments: build   
     - name: Run chmod to make jasmin executable
       run: chmod +x jasmin.jar
-      working-directory: Translator/src/main/java/
+      working-directory: Translator/src/main/java
     - name: Generate Output.j file
       run: java -jar src/main/java/jasmin.jar Output.j
