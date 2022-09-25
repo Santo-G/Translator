@@ -18,15 +18,12 @@ permissions:
 
 jobs:
   build:
-    defaults:
-      run:
-        working-directory: java
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 11
+    - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
@@ -37,17 +34,23 @@ jobs:
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build
-    #- name: Compile Lexer 
-    #  run: javac Lexer.java
+    - name: Compile Lexer 
+      run: javac Lexer.java
+      working-directory: java
     - name: Run Lexer 
       run: java Lexer
+      working-directory: java
     - name: Compile Parser 
       run: javac src/main/java/Parser.java
+      working-directory: java
     - name: Run Parser 
       run: java src/main/java/Parser
+      working-directory: java
     - name: Compile Translator 
       run: javac src/main/java/Translator.java
+      working-directory: java
     - name: Run Translator 
       run: java src/main/java/Translator
+      working-directory: java
     - name: Generate Output.j file
       run: java -jar src/main/java/jasmin.jar Output.j
