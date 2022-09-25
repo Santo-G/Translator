@@ -32,24 +32,6 @@ jobs:
     - name: Build with Gradle
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
-        arguments: build
-    - name: Compile Lexer 
-      run: javac Lexer.java
-      working-directory: java
-    - name: Run Lexer 
-      run: java Lexer
-      working-directory: java
-    - name: Compile Parser 
-      run: javac src/main/java/Parser.java
-      working-directory: java
-    - name: Run Parser 
-      run: java src/main/java/Parser
-      working-directory: java
-    - name: Compile Translator 
-      run: javac src/main/java/Translator.java
-      working-directory: java
-    - name: Run Translator 
-      run: java src/main/java/Translator
-      working-directory: java
+        arguments: build      
     - name: Generate Output.j file
       run: java -jar src/main/java/jasmin.jar Output.j
