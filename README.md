@@ -142,9 +142,27 @@ that can be executed with the following command:
 
 The final output should be an Output.j file, containing header, mnemonic instruction list and footer. 
 The output is generated according to the test file given read as input in the main of the Traslator class. 
-|:-------------------:|:--------------------------------------:|
-| <p align="center"><img src="file .lft.png" alt="File .lft"></p> | <p align="center"><img src="traduction.png" alt="Traduction"></p> |
-
+As an example, if the P language code to translate is the following:
+  ````
+  read (a);
+  print(+(a,1))
+  ````
+  
+the correspondent Output.j file will contains the following:
+  ````
+  invokestatic Output/read()I
+  istore 0
+  goto L1
+ L1:
+  iload 0
+  ldc 1
+  iadd
+  invokestatic Output/print(I)V
+  goto L2
+ L2:
+  goto L0
+ L0:
+  ````
 
 ## Tools and languages
 - Java 17
