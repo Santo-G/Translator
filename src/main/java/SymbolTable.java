@@ -1,5 +1,3 @@
-package translator;
-
 import java.util.*;
 
 public class SymbolTable {

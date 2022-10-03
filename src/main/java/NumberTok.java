@@ -1,5 +1,3 @@
-package translator;
-
 public class NumberTok extends Token {
 
     public String lexeme = "0";

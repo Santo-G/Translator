@@ -1,5 +1,3 @@
-package translator;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -459,7 +457,7 @@ public class Lexer {
 
     public static void main(String[] args) {
         Lexer lex = new Lexer();
-        String path = "test/TestFile.txt";     // path of the test file used
+        String path = "src/main/java/test/TestFile.txt";     // path of the test file used
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             Token tok;

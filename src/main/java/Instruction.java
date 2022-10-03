@@ -1,5 +1,3 @@
-package translator;
-
 public class Instruction {
     OpCode opCode;
     int operand;

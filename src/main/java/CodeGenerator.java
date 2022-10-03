@@ -1,5 +1,3 @@
-package translator;
-
 import java.util.LinkedList;
 import java.io.*;
 

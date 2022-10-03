@@ -1,5 +1,3 @@
-package translator;
-
 public class Token {
 
     public final int tag;
