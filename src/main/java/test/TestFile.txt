@@ -6,13 +6,13 @@ print(+(a,1))
 */
 /*
 	TEST #2
-
+*/
 assign 10 to x;
 assign 20 to y;
 assign 30 to z;
 print(+(x,*(y,z)))
 
-*/
+
 
 /*	TEST #3
 
